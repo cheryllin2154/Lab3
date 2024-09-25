@@ -21,11 +21,13 @@ public class JSONTranslator implements Translator {
     private List<String> countries = new ArrayList<>();
     // translations = [{"ar":"أفغانستان","bg":"Афганистан".....} {"ar":"ألبانيا","bg":"Албания"}
     // JSON objects that is f(language code) -> countryName, for each country
+
     private JSONArray translations = new JSONArray();
 
     /**
      * Constructs a JSONTranslator using data from the sample.json resources file.
      */
+
     public JSONTranslator() {
         this("sample.json");
     }
@@ -42,7 +44,7 @@ public class JSONTranslator implements Translator {
             String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource(filename).toURI()));
 
             JSONArray jsonArray = new JSONArray(jsonString);
-
+  
             // this for loop makes the instance variables what's said in comments
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);

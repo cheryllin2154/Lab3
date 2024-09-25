@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,8 @@ import java.util.List;
 public class CountryCodeConverter {
 
     // TODO Task: pic appropriate instance variable(s) to store the data necessary for this class
-
+    private final List<String> countries = new ArrayList<>();
+    private final List<String> codes = new ArrayList<>();
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
      * in the resources folder.
@@ -33,7 +35,12 @@ public class CountryCodeConverter {
                     .getClassLoader().getResource(filename).toURI()));
 
             // TODO Task: use lines to populate the instance variable(s)
-
+            for (int i = 1; i < lines.size(); i++) {
+                int length = lines.get(i).length();
+                codes.add(lines.get(i).substring(length - 7, length - 4));
+                countries.add(lines.get(i).substring(0, length - 11));
+            }
+            assert countries.size() == codes.size();
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -48,7 +55,13 @@ public class CountryCodeConverter {
      */
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return code;
+        code = code.toUpperCase();
+        for (int i = 0; i < codes.size(); i++) {
+            if (code.equals(codes.get(i))) {
+                return countries.get(i);
+            }
+        }
+        return "Country not found";
     }
 
     /**
@@ -58,7 +71,13 @@ public class CountryCodeConverter {
      */
     public String fromCountry(String country) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+        country = country.toUpperCase();
+        for (int i = 0; i < countries.size(); i++) {
+            if (country.equals(countries.get(i))) {
+                return codes.get(i);
+            }
+        }
+        return "Country not found";
     }
 
     /**
@@ -67,6 +86,14 @@ public class CountryCodeConverter {
      */
     public int getNumCountries() {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+        return codes.size();
+    }
+
+    public static void main(String[] args) {
+        CountryCodeConverter converter = new CountryCodeConverter();
+        System.out.println(converter.fromCountryCode("BGD"));
+        System.out.println(converter.fromCountry("Bangladesh"));
+        System.out.println(converter.getNumCountries());
+        System.out.println(converter.countries.get(0));
     }
 }
