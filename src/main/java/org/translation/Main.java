@@ -47,7 +47,7 @@ public class Main {
             if (quit.equals(countryName)) {
                 break;
             }
-            // converts countryName into countryCode
+            // converts countryName into alpha3 countryCode
             String countryCode = countryCodeConverter.fromCountry(countryName);
 
             // Same for promptForLanguage

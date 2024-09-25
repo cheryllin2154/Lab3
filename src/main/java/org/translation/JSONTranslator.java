@@ -17,7 +17,7 @@ import org.json.JSONObject;
  */
 public class JSONTranslator implements Translator {
 
-    // countries = {"afg", "alb"...} all alpha3
+    // countries = {"afg", "alb"...} all alpha3 codes
     private List<String> countries = new ArrayList<>();
     // translations = [{"ar":"أفغانستان","bg":"Афганистан".....} {"ar":"ألبانيا","bg":"Албания"}
     // JSON objects that is f(language code) -> countryName, for each country
@@ -64,7 +64,7 @@ public class JSONTranslator implements Translator {
     public List<String> getCountryLanguages(String country) {
 
         List<String> languages = new ArrayList<>();
-        JSONObject temp = new JSONObject();
+        JSONObject temp;
 
         // Get the country in translations
         // temp = the country JSONObject
@@ -88,7 +88,7 @@ public class JSONTranslator implements Translator {
 
     @Override
     public String translate(String countryCode, String languageCode) {
-        JSONObject temp = new JSONObject();
+        JSONObject temp;
 
         // Get the country in translations
         // temp = the country JSONObject
