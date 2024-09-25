@@ -55,6 +55,7 @@ public class CountryCodeConverter {
      */
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
+        code = code.toUpperCase();
         for (int i = 0; i < codes.size(); i++) {
             if (code.equals(codes.get(i))) {
                 return countries.get(i);
@@ -70,6 +71,7 @@ public class CountryCodeConverter {
      */
     public String fromCountry(String country) {
         // TODO Task: update this code to use an instance variable to return the correct value
+        country = country.toUpperCase();
         for (int i = 0; i < countries.size(); i++) {
             if (country.equals(countries.get(i))) {
                 return codes.get(i);

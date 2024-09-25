@@ -21,8 +21,6 @@ public class JSONTranslationExample {
         try {
             // this next line of code reads in a file from the resources folder as a String,
             // which we then create a new JSONArray object from.
-            // TODO CheckStyle: Line is longer than 120 characters
-            //                  (note: you can split a line such that the next line starts with a .method()... call
             String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource("sample.json")
                     .toURI()));
             this.jsonArray = new JSONArray(jsonString);
@@ -41,8 +39,6 @@ public class JSONTranslationExample {
         return canada.getString("es");
     }
 
-    // TODO Task: Complete the method below to generalize the above to get the country name
-    //            for any country code and language code from sample.json.
 
 
     /**
