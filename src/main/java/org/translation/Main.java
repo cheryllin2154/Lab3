@@ -35,23 +35,33 @@ public class Main {
      */
     public static void runProgram(Translator translator) {
         while (true) {
+            // make instance of converters
             CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
             LanguageCodeConverter languageConverter = new LanguageCodeConverter();
+
+            // quit command
             String quit = "quit";
 
+            // start, call promptForCountry, get the countryName user inputs.
             String countryName = promptForCountry(translator);
             if (quit.equals(countryName)) {
                 break;
             }
+            // converts countryName into alpha3 countryCode
             String countryCode = countryCodeConverter.fromCountry(countryName);
 
+            // Same for promptForLanguage
             String languageName = promptForLanguage(translator, countryCode);
             if (languageName.equals(quit)) {
                 break;
             }
             String languageCode = languageConverter.fromLanguage(languageName);
+
+            // Final output
             System.out.println(countryName + " in " + languageName + " is "
                     + translator.translate(countryCode, languageCode));
+
+            // Start to while loop
             System.out.println("Press enter to continue or quit to exit.");
             Scanner s = new Scanner(System.in);
             String textTyped = s.nextLine();

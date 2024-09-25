@@ -16,7 +16,12 @@ import org.json.JSONObject;
  * data from a JSON file. The data is read in once each time an instance of this class is constructed.
  */
 public class JSONTranslator implements Translator {
+
+    // countries = {"afg", "alb"...} all alpha3 codes
     private List<String> countries = new ArrayList<>();
+    // translations = [{"ar":"أفغانستان","bg":"Афганистан".....} {"ar":"ألبانيا","bg":"Албания"}
+    // JSON objects that is f(language code) -> countryName, for each country
+
     private JSONArray translations = new JSONArray();
 
     /**
@@ -39,6 +44,8 @@ public class JSONTranslator implements Translator {
             String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource(filename).toURI()));
 
             JSONArray jsonArray = new JSONArray(jsonString);
+  
+            // this for loop makes the instance variables what's said in comments
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 final String country = jsonObject.getString("alpha3");
@@ -48,6 +55,7 @@ public class JSONTranslator implements Translator {
                 countries.add(country);
                 translations.put(jsonObject);
             }
+
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -56,11 +64,19 @@ public class JSONTranslator implements Translator {
 
     @Override
     public List<String> getCountryLanguages(String country) {
+
         List<String> languages = new ArrayList<>();
-        JSONObject temp = new JSONObject();
+        JSONObject temp;
+
+        // Get the country in translations
+        // temp = the country JSONObject
         int index = countries.indexOf(country);
         temp = translations.getJSONObject(index);
+
+        // keys = language codes only, without actual translation
         Iterator<String> keys = temp.keys();
+
+        // change type from iterator to list
         while (keys.hasNext()) {
             languages.add(keys.next());
         }
@@ -73,8 +89,16 @@ public class JSONTranslator implements Translator {
     }
 
     @Override
-    public String translate(String country, String language) {
-        // TODO Task: complete this method using your instance variables as needed
-        return null;
+    public String translate(String countryCode, String languageCode) {
+        JSONObject temp;
+
+        // Get the country in translations
+        // temp = the country JSONObject
+        int index = countries.indexOf(countryCode);
+        temp = translations.getJSONObject(index);
+
+        // temp can map languageCode to finalTranslation
+        String finalTranslation = temp.getString(languageCode);
+        return finalTranslation;
     }
 }
