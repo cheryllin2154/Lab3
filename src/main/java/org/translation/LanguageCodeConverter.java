@@ -14,6 +14,8 @@ import java.util.Map;
 public class LanguageCodeConverter {
 
     // TODO Task: pick appropriate instance variables to store the data necessary for this class
+    // store key-value relationships between languages
+    private Map<String, String> languageCodeMap;
 
     /**
      * Default constructor which will load the language codes from "language-codes.txt"
@@ -36,6 +38,11 @@ public class LanguageCodeConverter {
 
             // TODO Task: use lines to populate the instance variable
             //           tip: you might find it convenient to create an iterator using lines.iterator()
+            // populate the languageCodeMap using lines in file
+            for (String lin : lines) {
+                String[] parts = line.split("=");
+
+            }
 
         // TODO Checkstyle: '}' on next line should be alone on a line.
         } catch (IOException | URISyntaxException ex) {
