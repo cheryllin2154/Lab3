@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,8 @@ import java.util.List;
  */
 public class CountryCodeConverter {
 
-    // TODO Task: pic appropriate instance variable(s) to store the data necessary for this class
+    private final List<String> countries = new ArrayList<>();
+    private final List<String> codes = new ArrayList<>();
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -31,8 +33,16 @@ public class CountryCodeConverter {
         try {
             List<String> lines = Files.readAllLines(Paths.get(getClass()
                     .getClassLoader().getResource(filename).toURI()));
+            // lines is the Arraylist of String of the lines in file. Sep by \t
+            // lines.get(0) = "Country\tAlpha-2 code\tAlpha-3 code\tNumeric"
 
-            // TODO Task: use lines to populate the instance variable(s)
+            for (int i = 1; i < lines.size(); i++) {
+                String[] country = lines.get(i).split("\t");
+                // country[0] is name, [1] is alpha2, [2] is alpha3, [3] is id?
+
+                codes.add(country[2]);
+                countries.add(country[0]);
+            }
 
         }
         catch (IOException | URISyntaxException ex) {
@@ -47,8 +57,14 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return code;
+
+        int index = codes.indexOf(code.toUpperCase());
+
+        if (index == -1) {
+            return "Country not found";
+        }
+
+        return countries.get(index);
     }
 
     /**
@@ -57,8 +73,14 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+
+        int index = countries.indexOf(country);
+
+        if (index == -1) {
+            return "Code not found";
+        }
+
+        return codes.get(index);
     }
 
     /**
@@ -66,7 +88,6 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+        return codes.size();
     }
 }

@@ -36,8 +36,8 @@ public class Main {
     public static void runProgram(Translator translator) {
         while (true) {
             // make instance of converters
-            CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
-            LanguageCodeConverter languageConverter = new LanguageCodeConverter();
+            CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
+            LanguageCodeConverter languageConverter = new LanguageCodeConverter("language-codes.txt");
 
             // quit command
             String quit = "quit";
@@ -75,7 +75,7 @@ public class Main {
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForCountry(Translator translator) {
         List<String> countries = translator.getCountries();
-        CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
+        CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
 
         // Changing the countryCode to countryName
         for (int i = 0; i < countries.size(); i++) {
@@ -103,7 +103,7 @@ public class Main {
     private static String promptForLanguage(Translator translator, String country) {
 
         List<String> languages = translator.getCountryLanguages(country);
-        LanguageCodeConverter languageCodeConverter = new LanguageCodeConverter();
+        LanguageCodeConverter languageCodeConverter = new LanguageCodeConverter("language-codes.txt");
 
         // Changing the languagesCode to languagesName
         for (int i = 0; i < languages.size(); i++) {
