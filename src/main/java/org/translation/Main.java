@@ -78,6 +78,7 @@ public class Main {
         CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
 
         // Changing the countryCode to countryName
+        // should really use replaceAll, but too lazy to do so.
         for (int i = 0; i < countries.size(); i++) {
             String countryCode = countries.get(i);
             String countryName = countryCodeConverter.fromCountryCode(countryCode);
