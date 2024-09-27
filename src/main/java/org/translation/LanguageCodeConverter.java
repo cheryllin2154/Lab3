@@ -35,10 +35,15 @@ public class LanguageCodeConverter {
                     .getClassLoader().getResource(filename).toURI()));
             for (int i = 1; i < lines.size(); i++) {
                 int length = lines.get(i).length();
+
+                //code is in last 2 index
                 codes.add(lines.get(i).substring(length - 2, length));
+
+                //except last 2 index, is language
                 languages.add(lines.get(i).substring(0, length - 3));
             }
-        } catch (IOException | URISyntaxException ex) {
+        }
+        catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -78,13 +83,5 @@ public class LanguageCodeConverter {
      */
     public int getNumLanguages() {
         return codes.size();
-    }
-
-    public static void main(String[] args) {
-        LanguageCodeConverter converter = new LanguageCodeConverter();
-        System.out.println(converter.fromLanguageCode("bn"));
-        System.out.println(converter.fromLanguage("Bengali"));
-        System.out.println(converter.getNumLanguages());
-        System.out.println(converter.languages.get(0));
     }
 }

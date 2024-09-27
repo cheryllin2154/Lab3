@@ -37,10 +37,13 @@ public class CountryCodeConverter {
             // TODO Task: use lines to populate the instance variable(s)
             for (int i = 1; i < lines.size(); i++) {
                 int length = lines.get(i).length();
+
+                //code begin at last 7 to 4 index in each line
                 codes.add(lines.get(i).substring(length - 7, length - 4));
+
+                //except last 11 index, the remaining is country
                 countries.add(lines.get(i).substring(0, length - 11));
             }
-            assert countries.size() == codes.size();
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -55,9 +58,8 @@ public class CountryCodeConverter {
      */
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        code = code.toUpperCase();
         for (int i = 0; i < codes.size(); i++) {
-            if (code.equals(codes.get(i))) {
+            if (code.toUpperCase().equals(codes.get(i))) {
                 return countries.get(i);
             }
         }
@@ -71,9 +73,8 @@ public class CountryCodeConverter {
      */
     public String fromCountry(String country) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        country = country.toUpperCase();
         for (int i = 0; i < countries.size(); i++) {
-            if (country.equals(countries.get(i))) {
+            if (country.toUpperCase().equals(countries.get(i))) {
                 return codes.get(i);
             }
         }
@@ -87,13 +88,5 @@ public class CountryCodeConverter {
     public int getNumCountries() {
         // TODO Task: update this code to use an instance variable to return the correct value
         return codes.size();
-    }
-
-    public static void main(String[] args) {
-        CountryCodeConverter converter = new CountryCodeConverter();
-        System.out.println(converter.fromCountryCode("BGD"));
-        System.out.println(converter.fromCountry("Bangladesh"));
-        System.out.println(converter.getNumCountries());
-        System.out.println(converter.countries.get(0));
     }
 }
