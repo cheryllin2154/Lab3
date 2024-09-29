@@ -1,5 +1,6 @@
 package org.translation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +15,9 @@ import java.util.Scanner;
  * - at any time, the user can type quit to quit the program<br/>
  */
 public class Main {
+
+    private static CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
+    private static LanguageCodeConverter languageConverter = new LanguageCodeConverter("language-codes.txt");
 
     /**
      * This is the main entry point of our Translation System!<br/>
@@ -36,9 +40,6 @@ public class Main {
     public static void runProgram(Translator translator) {
         while (true) {
             // make instance of converters
-            CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
-            LanguageCodeConverter languageConverter = new LanguageCodeConverter("language-codes.txt");
-
             // quit command
             String quit = "quit";
 
@@ -75,21 +76,21 @@ public class Main {
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForCountry(Translator translator) {
         List<String> countries = translator.getCountries();
-        CountryCodeConverter countryCodeConverter = new CountryCodeConverter("country-codes.txt");
 
         // Changing the countryCode to countryName
         // should really use replaceAll, but too lazy to do so.
+        List<String> countryCodes = new ArrayList<>(countries.size());
         for (int i = 0; i < countries.size(); i++) {
             String countryCode = countries.get(i);
             String countryName = countryCodeConverter.fromCountryCode(countryCode);
-            countries.set(i, countryName);
+            countryCodes.add(countryName);
         }
 
         // Sort the countries
-        Collections.sort(countries);
+        Collections.sort(countryCodes);
 
         // print line by line
-        for (String country : countries) {
+        for (String country : countryCodes) {
             System.out.println(country);
         }
         System.out.println("select a country from above:");
@@ -104,13 +105,12 @@ public class Main {
     private static String promptForLanguage(Translator translator, String country) {
 
         List<String> languages = translator.getCountryLanguages(country);
-        LanguageCodeConverter languageCodeConverter = new LanguageCodeConverter("language-codes.txt");
 
         // Changing the languagesCode to languagesName
         for (int i = 0; i < languages.size(); i++) {
             String languagesCode = languages.get(i);
             // here assumed String country is the country code, not the country name, may need to change
-            String languagesName = languageCodeConverter.fromLanguageCode(languagesCode);
+            String languagesName = languageConverter.fromLanguageCode(languagesCode);
             languages.set(i, languagesName);
         }
 

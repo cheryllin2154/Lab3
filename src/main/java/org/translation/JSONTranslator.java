@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class JSONTranslator implements Translator {
 
         // Get the country in translations
         // temp = the country JSONObject
-        int index = countries.indexOf(country);
+        int index = countries.indexOf(country.toLowerCase());
         temp = translations.getJSONObject(index);
 
         // keys = language codes only, without actual translation
@@ -83,7 +84,7 @@ public class JSONTranslator implements Translator {
 
     @Override
     public List<String> getCountries() {
-        return countries;
+        return List.copyOf(countries);
     }
 
     @Override
@@ -92,7 +93,7 @@ public class JSONTranslator implements Translator {
 
         // Get the country in translations
         // temp = the country JSONObject
-        int index = countries.indexOf(countryCode);
+        int index = countries.indexOf(countryCode.toLowerCase());
         temp = translations.getJSONObject(index);
 
         // temp can map languageCode to finalTranslation
